@@ -39,22 +39,14 @@ fun main(vararg args: String) {
 	val nextStep = currentStep + nextDelta
 	val nextStepDir = Path(stepDir, nextStep.toString())
 
-	fs.deleteRecursively(outDir)
 	fs.copyRecursively(nextStepDir, outDir)
 
 	fs.atomicMove(stepFile, Path(stepFileDir, STEP_FILE_PREFIX + nextStep))
 }
 
-private fun FileSystem.deleteRecursively(path: Path) {
-	if (metadataOrNull(path)!!.isDirectory) {
-		list(path).forEach(::deleteRecursively)
-	}
-	delete(path, mustExist = true)
-}
-
 private fun FileSystem.copyRecursively(source: Path, target: Path) {
 	if (metadataOrNull(source)!!.isDirectory) {
-		createDirectories(target, mustCreate = true)
+		createDirectories(target, mustCreate = false)
 		list(source).forEach { child ->
 			copyRecursively(child, Path(target, child.name))
 		}
