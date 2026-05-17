@@ -42,8 +42,7 @@ fun main(vararg args: String) {
 	fs.deleteRecursively(outDir)
 	fs.copyRecursively(nextStepDir, outDir)
 
-	fs.delete(stepFile)
-	fs.touch(Path(stepFileDir, STEP_FILE_PREFIX + nextStep))
+	fs.atomicMove(stepFile, Path(stepFileDir, STEP_FILE_PREFIX + nextStep))
 }
 
 private fun FileSystem.deleteRecursively(path: Path) {
@@ -66,8 +65,4 @@ private fun FileSystem.copyRecursively(source: Path, target: Path) {
 			}
 		}
 	}
-}
-
-private fun FileSystem.touch(path: Path) {
-	sink(path).close()
 }
