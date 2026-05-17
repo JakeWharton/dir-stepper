@@ -8,19 +8,19 @@ import kotlinx.io.files.SystemFileSystem
 private const val STEP_FILE_PREFIX = ".step."
 
 fun main(vararg args: String) {
-	require(args.size == 4) {
-		"Wrong number of arguments: ${args.size}"
+	require(args.size in 2..4) {
+		"Arguments: dir next|prev [stepDir] [stepFileDir]"
 	}
-	val (stepFileDirPath, stepDirPath, outDirPath, direction) = args
 
-	val stepFileDir = Path(stepFileDirPath)
-	val stepDir = Path(stepDirPath)
-	val outDir = Path(outDirPath)
-	val nextDelta = when (direction) {
+	val outDir = Path(args[0])
+	val nextDelta = when (val direction = args[1]) {
 		"next" -> 1
 		"prev" -> -1
 		else -> throw UnsupportedOperationException("Unknown direction: $direction")
 	}
+
+	val stepDir = args.getOrNull(2)?.let(::Path) ?: Path(outDir, ".steps")
+	val stepFileDir = args.getOrNull(3)?.let(::Path) ?: outDir
 
 	val fs = SystemFileSystem
 
