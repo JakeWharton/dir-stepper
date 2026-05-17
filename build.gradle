@@ -1,0 +1,28 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath(libs.kotlin.plugin)
+	}
+}
+
+apply plugin: 'org.jetbrains.kotlin.multiplatform'
+
+kotlin {
+	macosArm64 {
+		binaries {
+			executable {
+				entryPoint = 'com.jakewharton.dirstepper.main'
+			}
+		}
+	}
+
+	sourceSets {
+		commonMain {
+			dependencies {
+				implementation(libs.kotlinx.io)
+			}
+		}
+	}
+}

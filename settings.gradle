@@ -1,0 +1,7 @@
+rootProject.name = 'dir-stepper'
+
+dependencyResolutionManagement {
+	repositories {
+		mavenCentral()
+	}
+}

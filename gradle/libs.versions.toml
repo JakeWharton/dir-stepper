@@ -1,0 +1,7 @@
+[versions]
+kotlin = "2.3.20"
+
+[libraries]
+kotlin-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+kotlinx-io = "org.jetbrains.kotlinx:kotlinx-io-core:0.9.0"
