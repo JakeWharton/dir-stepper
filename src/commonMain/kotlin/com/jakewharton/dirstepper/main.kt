@@ -38,6 +38,9 @@ fun main(vararg args: String) {
 
 	val nextStep = currentStep + nextDelta
 	val nextStepDir = Path(stepDir, nextStep.toString())
+	check(fs.exists(nextStepDir)) {
+		"No next step exists: $nextStep"
+	}
 
 	fs.copyRecursively(nextStepDir, outDir)
 
