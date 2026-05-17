@@ -24,7 +24,9 @@ fun main(vararg args: String) {
 
 	val fs = SystemFileSystem
 
-	val stepFile = fs.list(stepFileDir).single { it.name.startsWith(STEP_FILE_PREFIX) }
+	val stepFile = checkNotNull(fs.list(stepFileDir).singleOrNull { it.name.startsWith(STEP_FILE_PREFIX) }) {
+		"Unable to locate '$STEP_FILE_PREFIX'-prefixed file"
+	}
 	val currentStep = stepFile.name.let { name ->
 		check(name.startsWith(STEP_FILE_PREFIX)) {
 			"Unable to parse current page name: $name"
