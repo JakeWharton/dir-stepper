@@ -30,10 +30,10 @@ fun main(vararg args: String) {
 	}
 	val currentStep = stepFile.name.let { name ->
 		check(name.startsWith(STEP_FILE_PREFIX)) {
-			"Unable to parse current page name: $name"
+			"Unable to parse current step name: $name"
 		}
 		checkNotNull(name.substring(STEP_FILE_PREFIX.length).toIntOrNull()) {
-			"Unable to parse current page number in: $name"
+			"Unable to parse current step number in: $name"
 		}
 	}
 
