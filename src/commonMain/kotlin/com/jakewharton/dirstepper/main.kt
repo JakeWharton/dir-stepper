@@ -9,13 +9,14 @@ private const val STEP_FILE_PREFIX = ".step."
 
 fun main(vararg args: String) {
 	require(args.size in 2..4) {
-		"Arguments: dir next|prev [stepDir] [stepFileDir]"
+		"Arguments: dir next|prev|reset [stepDir] [stepFileDir]"
 	}
 
 	val outDir = Path(args[0])
 	val delta = when (val direction = args[1]) {
 		"next" -> 1
 		"prev" -> -1
+		"reset" -> 0
 		else -> throw UnsupportedOperationException("Unknown direction: $direction")
 	}
 
