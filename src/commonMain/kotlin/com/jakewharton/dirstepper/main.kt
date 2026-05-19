@@ -13,7 +13,7 @@ fun main(vararg args: String) {
 	}
 
 	val outDir = Path(args[0])
-	val nextDelta = when (val direction = args[1]) {
+	val delta = when (val direction = args[1]) {
 		"next" -> 1
 		"prev" -> -1
 		else -> throw UnsupportedOperationException("Unknown direction: $direction")
@@ -36,15 +36,15 @@ fun main(vararg args: String) {
 		}
 	}
 
-	val nextStep = currentStep + nextDelta
-	val nextStepDir = Path(stepDir, nextStep.toString())
-	check(fs.exists(nextStepDir)) {
-		"No next step exists: $nextStep"
+	val newStep = currentStep + delta
+	val newStepDir = Path(stepDir, newStep.toString())
+	check(fs.exists(newStepDir)) {
+		"New step does not exist: $newStep"
 	}
 
-	fs.copyRecursively(nextStepDir, outDir)
+	fs.copyRecursively(newStepDir, outDir)
 
-	fs.atomicMove(stepFile, Path(stepFileDir, STEP_FILE_PREFIX + nextStep))
+	fs.atomicMove(stepFile, Path(stepFileDir, STEP_FILE_PREFIX + newStep))
 }
 
 private fun FileSystem.copyRecursively(source: Path, target: Path) {
